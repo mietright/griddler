@@ -95,5 +95,16 @@ module Griddler::EmailParser
     regex_split_points.inject(body) do |result, split_point|
       result.split(split_point).first || ""
     end
+  rescue Encoding::CompatibilityError
+    encoded_body = body&.encode(
+                        'UTF-8',
+                        invalid: :replace,
+                        undef: :replace,
+                        replace: '<?>'
+                      )
+
+    regex_split_points.inject(encoded_body) do |result, split_point|
+      result.split(split_point).first || ""
+    end
   end
 end
