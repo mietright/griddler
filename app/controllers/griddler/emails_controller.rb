@@ -1,6 +1,5 @@
 class Griddler::EmailsController < ActionController::Base
   skip_before_action :verify_authenticity_token, raise: false
-  skip_parameter_encoding :create
 
   def create
     normalized_params.each do |p|
